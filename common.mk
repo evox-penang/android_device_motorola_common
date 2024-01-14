@@ -74,17 +74,23 @@ else ifeq ($(PRODUCT_USES_MTK_HARDWARE),true) # MTK uses board platform
  FSTAB_SUFFIX := $(TARGET_BOARD_PLAFORM)
 endif
 
+# EROFS
+EROFS_SUFFIX := 
+ifeq (,$(filter $(BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE) $(BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE) $(BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE) $(BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE), erofs))
+  EROFS_SUFFIX := .erofs
+endif
+
 ## Select fstab path based on vendor_boot's existence.
 ## Always copy fstab to vendor.
 ifeq ($(call has-partition,vendor_boot),false)
   PRODUCT_COPY_FILES += \
-      $(PLATFORM_COMMON_PATH)/rootdir/$(call select-fstab):$(TARGET_COPY_OUT_RAMDISK)/fstab.$(FSTAB_SUFFIX)
+      $(PLATFORM_COMMON_PATH)/rootdir/$(call select-fstab)$(EROFS_SUFFIX):$(TARGET_COPY_OUT_RAMDISK)/fstab.$(FSTAB_SUFFIX)
 else
   PRODUCT_COPY_FILES += \
-      $(PLATFORM_COMMON_PATH)/rootdir/$(call select-fstab):$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.$(FSTAB_SUFFIX)
+      $(PLATFORM_COMMON_PATH)/rootdir/$(call select-fstab)$(EROFS_SUFFIX):$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.$(FSTAB_SUFFIX)
 endif
 PRODUCT_COPY_FILES += \
-    $(PLATFORM_COMMON_PATH)/rootdir/$(call select-fstab):$(TARGET_COPY_OUT_VENDOR)/etc/fstab.$(FSTAB_SUFFIX)
+    $(PLATFORM_COMMON_PATH)/rootdir/$(call select-fstab)$(EROFS_SUFFIX):$(TARGET_COPY_OUT_VENDOR)/etc/fstab.$(FSTAB_SUFFIX)
 
 # Kernel
 PRODUCT_VENDOR_KERNEL_HEADERS := $(PLATFORM_COMMON_PATH)-kernel/kernel-headers

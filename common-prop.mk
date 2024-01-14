@@ -191,6 +191,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     media.stagefright.thumbnail.prefer_hw_codecs=true
 
+# Media
+PRODUCT_PRODUCT_PROPERTIES += \
+    media.settings.xml=/vendor/etc/media_profiles_vendor.xml
+
 # Disable Compressed APEX on 4.14 kernel as Android 12 enforces it and our kernel is not compatible (yet)
 ifeq ($(TARGET_KERNEL_VERSION), 4.14)
   OVERRIDE_PRODUCT_COMPRESSED_APEX := false

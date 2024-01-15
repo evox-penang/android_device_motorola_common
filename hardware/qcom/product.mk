@@ -26,7 +26,8 @@ TARGET_COMMON_QTI_COMPONENTS := \
     overlay \
     qseecomd \
     vibrator \
-    wlan
+    wlan \
+    $(TARGET_ADDITIONAL_QTI_COMPONENTS)
 
 # Display
 $(call inherit-product-if-exists, vendor/qcom/opensource/display/$(qcom_platform)/config/display-product.mk)
@@ -48,6 +49,7 @@ ifneq ($(ROM_INCLUDES_QCOM_COMMON),true)
 endif
 
 # QTI VNDK Framework Detect
+TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
 PRODUCT_ODM_PROPERTIES += \
     ro.vendor.qti.va_odm.support=1
 

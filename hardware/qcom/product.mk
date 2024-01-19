@@ -28,6 +28,12 @@ TARGET_COMMON_QTI_COMPONENTS := \
     vibrator \
     wlan
 
+# NQ NFC supports
+ifeq ($(TARGET_SUPPORTS_NQ_NFC),true)
+  PRODUCT_PACKAGES += NQNfcNci
+  TARGET_COMMON_QTI_COMPONENTS += nfc
+endif
+
 # Display
 $(call inherit-product-if-exists, vendor/qcom/opensource/display/$(qcom_platform)/config/display-product.mk)
 $(call inherit-product-if-exists, vendor/qcom/opensource/display-commonsys-intf/config/display-interfaces-product.mk)
